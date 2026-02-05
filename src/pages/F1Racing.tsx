@@ -27,6 +27,7 @@ const F1Racing = () => {
   const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
   const cameraRef = useRef<THREE.PerspectiveCamera | null>(null);
   const playerCarRef = useRef<THREE.Group | null>(null);
+  const enemiesRef = useRef<THREE.Group[]>([]);
   const animationIdRef = useRef<number | null>(null);
   
   const [selectedCar, setSelectedCar] = useState<Car | null>(null);
@@ -34,6 +35,7 @@ const F1Racing = () => {
   const [raceFinished, setRaceFinished] = useState(false);
   const [speed, setSpeed] = useState(0);
   const [position, setPosition] = useState({ x: 0, z: 0 });
+  const [playerPosition, setPlayerPosition] = useState(6);
   const [keys, setKeys] = useState({ up: false, left: false, right: false });
   const [raceTime, setRaceTime] = useState(0);
   const [bestTime, setBestTime] = useState<number | null>(() => {
@@ -164,6 +166,30 @@ const F1Racing = () => {
     scene.add(playerCar);
     playerCarRef.current = playerCar;
 
+    // Create enemy cars (competitors)
+    const enemyCars = [
+      { color: 0xdc143c, x: -1.5, z: 5 },   // Ferrari
+      { color: 0x00d2be, x: 1.5, z: 8 },    // Mercedes
+      { color: 0xff8700, x: -1.5, z: 12 },  // McLaren
+      { color: 0x0090ff, x: 1.5, z: 15 },   // Alpine
+      { color: 0x00665e, x: 0, z: 18 },      // Aston Martin
+    ];
+
+    enemiesRef.current = [];
+    const enemyPositions: Array<{ x: number; z: number; speed: number }> = [];
+    
+    enemyCars.forEach(({ color, x, z }, idx) => {
+      const enemy = createF1Car(color);
+      enemy.position.set(x, 0, z);
+      scene.add(enemy);
+      enemiesRef.current.push(enemy);
+      enemyPositions.push({ 
+        x, 
+        z, 
+        speed: 55 + idx * 3 + Math.random() * 5 
+      });
+    });
+
     // Game state
     let playerZ = 0;
     let currentSpeed = 0;
@@ -173,11 +199,12 @@ const F1Racing = () => {
       animationIdRef.current = requestAnimationFrame(animate);
 
       if (playerCarRef.current && !raceFinished) {
-        // Acceleration
+        // Acceleration - maintain speed better
         if (keys.up) {
-          currentSpeed = Math.min(100, currentSpeed + 2);
+          currentSpeed = Math.min(100, currentSpeed + 2.5);
         } else {
-          currentSpeed = Math.max(0, currentSpeed - 1);
+          // Slow down gradually, but don't stop completely
+          currentSpeed = Math.max(20, currentSpeed - 0.5);
         }
 
         // Movement
@@ -189,16 +216,40 @@ const F1Racing = () => {
         } else if (keys.right) {
           playerX = Math.min(3, playerX + 0.15);
         } else {
-          // Return to center
-          playerX *= 0.9;
+          // Return to center slowly
+          playerX *= 0.95;
         }
 
-        // Update car position
+        // Update player car position
         playerCarRef.current.position.z = playerZ;
         playerCarRef.current.position.x = playerX;
         
         // Car rotation based on steering
         playerCarRef.current.rotation.z = (playerX / 3) * 0.3;
+
+        // Update enemy cars (competitors)
+        let position = 6; // Start at last place
+        enemiesRef.current.forEach((enemy, idx) => {
+          if (enemyPositions[idx]) {
+            // Move enemy forward
+            enemyPositions[idx].z += enemyPositions[idx].speed * 0.04;
+            
+            // Simple AI - slight side movement
+            enemyPositions[idx].x += Math.sin(enemyPositions[idx].z * 0.1) * 0.03;
+            enemyPositions[idx].x = Math.max(-3, Math.min(3, enemyPositions[idx].x));
+            
+            // Update enemy position
+            enemy.position.z = enemyPositions[idx].z;
+            enemy.position.x = enemyPositions[idx].x;
+            
+            // Check if player passed this enemy
+            if (playerZ > enemyPositions[idx].z + 1) {
+              position--;
+            }
+          }
+        });
+        
+        setPlayerPosition(position);
 
         // Update UI
         setSpeed(Math.round(currentSpeed));
@@ -294,6 +345,7 @@ const F1Racing = () => {
     setSpeed(0);
     setRaceTime(0);
     setPosition({ x: 0, z: 0 });
+    setPlayerPosition(6);
     playSound('success');
   };
 
@@ -436,7 +488,7 @@ const F1Racing = () => {
           <div className="space-y-4">
             {/* HUD */}
             <div className="bg-black/90 backdrop-blur-sm rounded-lg p-4 border-2 border-gray-700">
-              <div className="grid grid-cols-3 gap-4 text-center">
+              <div className="grid grid-cols-4 gap-4 text-center">
                 <div>
                   <p className="text-xs text-gray-400 font-bold mb-1">TIME</p>
                   <p className="text-2xl font-black text-white">{formatTime(raceTime)}</p>
@@ -444,6 +496,10 @@ const F1Racing = () => {
                 <div>
                   <p className="text-xs text-gray-400 font-bold mb-1">SPEED</p>
                   <p className="text-2xl font-black text-red-400">{speed} MPH</p>
+                </div>
+                <div>
+                  <p className="text-xs text-gray-400 font-bold mb-1">POSITION</p>
+                  <p className="text-2xl font-black text-yellow-400">{playerPosition}/6</p>
                 </div>
                 <div>
                   <p className="text-xs text-gray-400 font-bold mb-1">DISTANCE</p>

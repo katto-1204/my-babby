@@ -52,31 +52,31 @@ const Photobooth = () => {
     {
       id: 'heart-frame',
       name: 'Heart Frame',
-      overlay: '💕',
+      overlay: '',
       description: 'Romantic heart border',
     },
     {
       id: 'sparkle',
       name: 'Sparkle',
-      overlay: '✨',
+      overlay: '',
       description: 'Magical sparkles',
     },
     {
       id: 'valentine',
       name: 'Valentine',
-      overlay: '💝',
+      overlay: '',
       description: 'Valentine\'s day special',
     },
     {
       id: 'love',
       name: 'Love',
-      overlay: '❤️',
+      overlay: '',
       description: 'Love border',
     },
     {
       id: 'flower',
       name: 'Flower',
-      overlay: '🌹',
+      overlay: '',
       description: 'Flower frame',
     },
   ];
@@ -116,38 +116,17 @@ const Photobooth = () => {
     if (!template || templateId === 'none') return;
 
     context.save();
-    context.font = 'bold 48px Arial';
-    context.textAlign = 'center';
-    context.textBaseline = 'middle';
     
-    // Draw template overlay
-    if (template.overlay) {
-      // Corner decorations
-      const size = 60;
-      const padding = 20;
-      
-      // Top corners
-      context.fillText(template.overlay, padding, padding);
-      context.fillText(template.overlay, width - padding, padding);
-      
-      // Bottom corners
-      context.fillText(template.overlay, padding, height - padding);
-      context.fillText(template.overlay, width - padding, height - padding);
-      
-      // Sides
-      for (let i = 0; i < 5; i++) {
-        const y = padding + (i * (height - padding * 2) / 4);
-        context.fillText(template.overlay, padding, y);
-        context.fillText(template.overlay, width - padding, y);
-      }
-      
-      // Top and bottom borders
-      for (let i = 0; i < 8; i++) {
-        const x = padding + (i * (width - padding * 2) / 7);
-        context.fillText(template.overlay, x, padding);
-        context.fillText(template.overlay, x, height - padding);
-      }
-    }
+    // Draw decorative border instead of emojis
+    const borderWidth = 8;
+    const padding = 20;
+    
+    // Border color based on template
+    context.strokeStyle = '#ff6b9d';
+    context.lineWidth = borderWidth;
+    
+    // Draw border rectangle
+    context.strokeRect(padding, padding, width - padding * 2, height - padding * 2);
     
     context.restore();
   };
@@ -292,14 +271,6 @@ const Photobooth = () => {
                         <div className="text-9xl font-heavy text-white">{countdown}</div>
                       </motion.div>
                     )}
-                    {currentTemplate !== 'none' && (
-                      <div className="absolute inset-0 pointer-events-none z-0">
-                        <div className="absolute top-4 left-4 text-4xl">{templates.find(t => t.id === currentTemplate)?.overlay}</div>
-                        <div className="absolute top-4 right-4 text-4xl">{templates.find(t => t.id === currentTemplate)?.overlay}</div>
-                        <div className="absolute bottom-4 left-4 text-4xl">{templates.find(t => t.id === currentTemplate)?.overlay}</div>
-                        <div className="absolute bottom-4 right-4 text-4xl">{templates.find(t => t.id === currentTemplate)?.overlay}</div>
-                      </div>
-                    )}
                   </>
                 )}
               </div>
@@ -321,8 +292,7 @@ const Photobooth = () => {
                           : 'bg-muted text-muted-foreground border-transparent hover:bg-muted/80'
                       }`}
                     >
-                      <div className="text-2xl mb-1">{template.overlay || '📷'}</div>
-                      <div className="text-xs">{template.name}</div>
+                      <div className="text-xs font-medium">{template.name}</div>
                     </button>
                   ))}
                 </div>

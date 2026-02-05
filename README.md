@@ -1,73 +1,125 @@
-# Welcome to your Lovable project
+# A GIGI Surprise 💝
 
-## Project info
+A beautiful, interactive Valentine's Day surprise web application built with React, TypeScript, and Three.js. This romantic journey includes multiple features designed to create memorable moments.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+## 🌟 Features
 
-## How can I edit this code?
+### Core Valentine Experience
+- **Interactive Envelope Opening** - Realistic 3D envelope with smooth animations and sound effects
+- **Love Letter** - Personalized letter page with romantic animations
+- **Flower Gallery** - Beautiful animated flowers (Tulip, Daisy, Lily, Four-Leaf Clover)
+- **Memories Page** - Photo gallery with filters and animated reveals
+- **Question Page** - Interactive Q&A with romantic themes
+- **Closing Page** - Final message with replay option
 
-There are several ways of editing your application.
+### Additional Features
+- **Countdown Timer** - Countdown to special dates with particle effects
+- **Love Letter Builder** - Create and save custom love letters with rich text editing
+- **Date Planner** - Plan and manage dates with activity suggestions
+- **Love Language Quiz** - Discover love languages through interactive quiz
+- **Scrapbook Creator** - Digital scrapbook with drag-and-drop elements
+- **Voice Recorder** - Record and play voice messages with waveform visualization
+- **3D Flower Viewer** - Interactive 3D flower models using Three.js
+- **Secret Message Decoder** - Decode encrypted messages and puzzles
+- **Flashcard Generator** - Upload lessons (text/PDF) and generate study flashcards with multiple choice questions
+- **Photobooth** - Take photos with webcam, apply filters, and add design templates
+- **F1 Racing Game** - 3D Formula 1 racing game with competitors, realistic physics, and Grand Prix experience
 
-**Use Lovable**
+## 🚀 Getting Started
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+### Prerequisites
+- Node.js (v18 or higher)
+- npm or yarn
 
-Changes made via Lovable will be committed automatically to this repo.
+### Installation
 
-**Use your preferred IDE**
+1. Clone the repository:
+```bash
+git clone <repository-url>
+cd a-gigi-surprise
+```
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+2. Install dependencies:
+```bash
+npm install
+```
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+3. Start the development server:
+```bash
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+4. Open your browser and navigate to `http://localhost:5173`
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## 🛠️ Tech Stack
 
-**Use GitHub Codespaces**
+- **React 18** - UI framework
+- **TypeScript** - Type safety
+- **Vite** - Build tool and dev server
+- **Three.js** - 3D graphics and animations
+- **Framer Motion** - Smooth animations
+- **Tailwind CSS** - Styling
+- **shadcn/ui** - UI components
+- **PDF.js** - PDF text extraction for flashcards
+- **Web Audio API** - Sound effects and music
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## 📁 Project Structure
 
-## What technologies are used for this project?
+```
+src/
+├── components/
+│   ├── valentine/        # Valentine's journey components
+│   └── ui/              # Reusable UI components
+├── pages/               # Feature pages
+├── hooks/               # Custom React hooks
+├── lib/                 # Utility functions
+└── App.tsx             # Main app with routing
+```
 
-This project is built with:
+## 🎮 Controls
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+### F1 Racing Game
+- **UP / W** - Accelerate
+- **LEFT / A** - Steer left
+- **RIGHT / D** - Steer right
 
-## How can I deploy this project?
+### General Navigation
+- Use the navigation menu to access different features
+- Most features save data to localStorage automatically
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
+## 💾 Data Persistence
 
-## Can I connect a custom domain to my Lovable project?
+The application uses localStorage to save:
+- Countdown target dates
+- Love letters
+- Date plans
+- Voice messages
+- Photobooth photos
+- Flashcard sets
+- F1 racing best times
 
-Yes, you can!
+## 🎨 Features Highlights
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+### Sound System
+- Custom sound effects for interactions
+- Background romantic music
+- Mute/unmute controls
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+### Animations
+- Smooth page transitions
+- Particle effects
+- Floating hearts and sparkles
+- 3D transformations
+
+### 3D Graphics
+- Three.js powered 3D flowers
+- 3D F1 cars and racing track
+- Realistic lighting and shadows
+
+## 📝 License
+
+This project is a personal gift project.
+
+## 🙏 Acknowledgments
+
+Built with love using modern web technologies.
