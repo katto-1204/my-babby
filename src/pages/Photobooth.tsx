@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback } from 'react';
+import { useState, useRef, useCallback, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import FloatingHearts from '@/components/valentine/FloatingHearts';
 import { useSound } from '@/hooks/useSound';
@@ -82,23 +82,34 @@ const Photobooth = () => {
   ];
 
   const startCamera = useCallback(async () => {
+    if (isCapturing) return;
+    if (!navigator.mediaDevices?.getUserMedia) {
+      alert('Camera access is not supported in this browser.');
+      return;
+    }
+
     try {
       const stream = await navigator.mediaDevices.getUserMedia({
         video: { facingMode: 'user', width: 1280, height: 720 },
         audio: false,
       });
-      
+
+      streamRef.current = stream;
       if (videoRef.current) {
         videoRef.current.srcObject = stream;
-        streamRef.current = stream;
-        setIsCapturing(true);
-        playSound('success');
+        const playPromise = videoRef.current.play();
+        if (playPromise) {
+          await playPromise;
+        }
       }
+
+      setIsCapturing(true);
+      playSound('success');
     } catch (error) {
       console.error('Error accessing camera:', error);
       alert('Please allow camera access to use the photobooth!');
     }
-  }, [playSound]);
+  }, [isCapturing, playSound]);
 
   const stopCamera = useCallback(() => {
     if (streamRef.current) {
@@ -106,10 +117,13 @@ const Photobooth = () => {
       streamRef.current = null;
     }
     if (videoRef.current) {
+      videoRef.current.pause();
       videoRef.current.srcObject = null;
     }
     setIsCapturing(false);
   }, []);
+
+  useEffect(() => () => stopCamera(), [stopCamera]);
 
   const drawTemplate = (context: CanvasRenderingContext2D, width: number, height: number, templateId: string) => {
     const template = templates.find(t => t.id === templateId);
@@ -226,8 +240,16 @@ const Photobooth = () => {
           >
             <div className="bg-white/90 backdrop-blur-sm rounded-2xl p-6 shadow-elevated">
               <div className="relative bg-black rounded-lg overflow-hidden mb-6 aspect-video">
-                {!isCapturing ? (
-                  <div className="absolute inset-0 flex items-center justify-center">
+                <video
+                  ref={videoRef}
+                  autoPlay
+                  playsInline
+                  muted
+                  className="w-full h-full object-cover"
+                  style={{ filter: currentFilter === 'none' ? 'none' : filters.find(f => f.value === currentFilter)?.value }}
+                />
+                {!isCapturing && (
+                  <div className="absolute inset-0 flex items-center justify-center bg-black/60">
                     <div className="text-center text-white/60">
                       <svg
                         className="w-24 h-24 mx-auto mb-4"
@@ -251,27 +273,16 @@ const Photobooth = () => {
                       <p className="text-lg">Camera not active</p>
                     </div>
                   </div>
-                ) : (
-                  <>
-                    <video
-                      ref={videoRef}
-                      autoPlay
-                      playsInline
-                      muted
-                      className="w-full h-full object-cover"
-                      style={{ filter: currentFilter === 'none' ? 'none' : filters.find(f => f.value === currentFilter)?.value }}
-                    />
-                    {countdown > 0 && (
-                      <motion.div
-                        className="absolute inset-0 flex items-center justify-center bg-black/50 z-10"
-                        initial={{ scale: 0 }}
-                        animate={{ scale: [1, 1.2, 1] }}
-                        transition={{ duration: 0.3, repeat: Infinity }}
-                      >
-                        <div className="text-9xl font-heavy text-white">{countdown}</div>
-                      </motion.div>
-                    )}
-                  </>
+                )}
+                {countdown > 0 && (
+                  <motion.div
+                    className="absolute inset-0 flex items-center justify-center bg-black/50 z-10"
+                    initial={{ scale: 0 }}
+                    animate={{ scale: [1, 1.2, 1] }}
+                    transition={{ duration: 0.3, repeat: Infinity }}
+                  >
+                    <div className="text-9xl font-heavy text-white">{countdown}</div>
+                  </motion.div>
                 )}
               </div>
 
