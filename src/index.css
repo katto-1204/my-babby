@@ -1,0 +1,335 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap');
+
+/* Valentine Design System - Pastel Green & White Romantic Theme */
+
+@layer base {
+  :root {
+    /* Core palette - Pastel green romance */
+    --background: 140 30% 97%;
+    --foreground: 150 20% 15%;
+    
+    --card: 140 25% 95%;
+    --card-foreground: 150 20% 15%;
+    
+    --popover: 140 30% 98%;
+    --popover-foreground: 150 20% 15%;
+    
+    /* Primary - Sage green */
+    --primary: 145 35% 55%;
+    --primary-foreground: 0 0% 100%;
+    
+    /* Secondary - Soft mint */
+    --secondary: 150 30% 90%;
+    --secondary-foreground: 150 25% 25%;
+    
+    --muted: 145 20% 92%;
+    --muted-foreground: 150 15% 45%;
+    
+    /* Accent - Deeper forest green */
+    --accent: 155 40% 40%;
+    --accent-foreground: 0 0% 100%;
+    
+    /* Romantic blush accent */
+    --romantic: 350 60% 88%;
+    --romantic-foreground: 350 40% 30%;
+    
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    
+    --border: 145 25% 85%;
+    --input: 145 25% 88%;
+    --ring: 145 35% 55%;
+    
+    --radius: 0.75rem;
+    
+    /* Custom gradients */
+    --gradient-romantic: linear-gradient(135deg, hsl(140 30% 97%) 0%, hsl(150 35% 92%) 50%, hsl(145 30% 95%) 100%);
+    --gradient-deep: linear-gradient(180deg, hsl(200 25% 15%) 0%, hsl(340 30% 25%) 100%);
+    --gradient-paper: linear-gradient(180deg, hsl(40 30% 96%) 0%, hsl(35 25% 92%) 100%);
+    
+    /* Shadows */
+    --shadow-soft: 0 4px 20px -4px hsl(145 30% 50% / 0.15);
+    --shadow-elevated: 0 10px 40px -10px hsl(145 30% 40% / 0.25);
+    --shadow-romantic: 0 8px 30px -8px hsl(350 40% 60% / 0.2);
+    
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 200 25% 8%;
+    --foreground: 140 20% 95%;
+    
+    --card: 200 20% 12%;
+    --card-foreground: 140 20% 95%;
+    
+    --popover: 200 20% 10%;
+    --popover-foreground: 140 20% 95%;
+    
+    --primary: 145 40% 60%;
+    --primary-foreground: 200 25% 8%;
+    
+    --secondary: 200 15% 18%;
+    --secondary-foreground: 140 20% 90%;
+    
+    --muted: 200 15% 15%;
+    --muted-foreground: 140 15% 60%;
+    
+    --accent: 155 35% 50%;
+    --accent-foreground: 0 0% 100%;
+    
+    --romantic: 350 40% 25%;
+    --romantic-foreground: 350 30% 85%;
+    
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    
+    --border: 200 15% 20%;
+    --input: 200 15% 18%;
+    --ring: 145 40% 60%;
+    
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+  
+  /* Heavy font for h1 */
+  h1 {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-weight: 900;
+    letter-spacing: -0.02em;
+  }
+  
+  /* Instrument Serif for h2 */
+  h2 {
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-weight: 400;
+    font-style: italic;
+  }
+}
+
+@layer components {
+  .page-container {
+    @apply min-h-screen w-full relative overflow-hidden;
+  }
+  
+  .romantic-card {
+    @apply rounded-2xl p-8 backdrop-blur-sm;
+    background: var(--gradient-paper);
+    box-shadow: var(--shadow-elevated);
+  }
+  
+  .envelope-btn {
+    @apply cursor-pointer transition-all duration-500 ease-out;
+    filter: drop-shadow(0 8px 24px hsl(145 30% 40% / 0.2));
+  }
+  
+  .envelope-btn:hover {
+    transform: translateY(-4px) scale(1.02);
+    filter: drop-shadow(0 12px 32px hsl(145 30% 40% / 0.3));
+  }
+  
+  .floating-element {
+    @apply absolute pointer-events-none;
+    animation: float 8s ease-in-out infinite;
+  }
+  
+  .text-romantic {
+    @apply text-transparent bg-clip-text;
+    background-image: linear-gradient(135deg, hsl(var(--accent)) 0%, hsl(var(--primary)) 100%);
+  }
+  
+  .btn-romantic {
+    @apply px-8 py-4 rounded-full font-medium text-lg transition-all duration-300;
+    background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--accent)) 100%);
+    color: hsl(var(--primary-foreground));
+    box-shadow: var(--shadow-soft);
+  }
+  
+  .btn-romantic:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-elevated);
+  }
+  
+  .scratch-overlay {
+    @apply absolute inset-0 cursor-crosshair;
+    touch-action: none;
+  }
+  
+  .parallax-layer {
+    @apply absolute inset-0 pointer-events-none;
+    will-change: transform;
+  }
+}
+
+@layer utilities {
+  .font-heavy {
+    font-weight: 900;
+  }
+  
+  .font-serif-italic {
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-style: italic;
+  }
+  
+  .gradient-romantic {
+    background: var(--gradient-romantic);
+  }
+  
+  .gradient-deep {
+    background: var(--gradient-deep);
+  }
+  
+  .gradient-paper {
+    background: var(--gradient-paper);
+  }
+  
+  .shadow-romantic {
+    box-shadow: var(--shadow-romantic);
+  }
+  
+  .shadow-soft {
+    box-shadow: var(--shadow-soft);
+  }
+  
+  .shadow-elevated {
+    box-shadow: var(--shadow-elevated);
+  }
+  
+  .perspective-1000 {
+    perspective: 1000px;
+  }
+  
+  .preserve-3d {
+    transform-style: preserve-3d;
+  }
+  
+  .backface-hidden {
+    backface-visibility: hidden;
+  }
+  
+  .rotate-y-180 {
+    transform: rotateY(180deg);
+  }
+}
+
+/* Animations */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-20px) rotate(5deg);
+  }
+  50% {
+    transform: translateY(-10px) rotate(-3deg);
+  }
+  75% {
+    transform: translateY(-25px) rotate(3deg);
+  }
+}
+
+@keyframes drift {
+  0% {
+    transform: translateX(-100%) translateY(100vh) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(100vw) translateY(-100px) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+@keyframes pulse-soft {
+  0%, 100% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+}
+
+@keyframes confetti-fall {
+  0% {
+    transform: translateY(-100%) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) rotate(720deg);
+    opacity: 0;
+  }
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes envelope-open {
+  0% {
+    transform: rotateX(0deg);
+  }
+  100% {
+    transform: rotateX(-180deg);
+  }
+}
+
+@keyframes paper-slide {
+  0% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(-20px);
+    opacity: 1;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
