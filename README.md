@@ -1,125 +1,43 @@
-# A GIGI Surprise 💝
+# A GIGI Surprise
 
-A beautiful, interactive Valentine's Day surprise web application built with React, TypeScript, and Three.js. This romantic journey includes multiple features designed to create memorable moments.
+Interactive Valentine's web app: React, TypeScript, Three.js. Journey from a 404-style entry to envelope, letter, flowers, and extras.
 
-## 🌟 Features
+## Quick Start
 
-### Core Valentine Experience
-- **Interactive Envelope Opening** - Realistic 3D envelope with smooth animations and sound effects
-- **Love Letter** - Personalized letter page with romantic animations
-- **Flower Gallery** - Beautiful animated flowers (Tulip, Daisy, Lily, Four-Leaf Clover)
-- **Memories Page** - Photo gallery with filters and animated reveals
-- **Question Page** - Interactive Q&A with romantic themes
-- **Closing Page** - Final message with replay option
-
-### Additional Features
-- **Countdown Timer** - Countdown to special dates with particle effects
-- **Love Letter Builder** - Create and save custom love letters with rich text editing
-- **Date Planner** - Plan and manage dates with activity suggestions
-- **Love Language Quiz** - Discover love languages through interactive quiz
-- **Scrapbook Creator** - Digital scrapbook with drag-and-drop elements
-- **Voice Recorder** - Record and play voice messages with waveform visualization
-- **3D Flower Viewer** - Interactive 3D flower models using Three.js
-- **Secret Message Decoder** - Decode encrypted messages and puzzles
-- **Flashcard Generator** - Upload lessons (text/PDF) and generate study flashcards with multiple choice questions
-- **Photobooth** - Take photos with webcam, apply filters, and add design templates
-- **F1 Racing Game** - 3D Formula 1 racing game with competitors, realistic physics, and Grand Prix experience
-
-## 🚀 Getting Started
-
-### Prerequisites
-- Node.js (v18 or higher)
-- npm or yarn
-
-### Installation
-
-1. Clone the repository:
 ```bash
-git clone <repository-url>
+git clone <repo-url>
 cd a-gigi-surprise
-```
-
-2. Install dependencies:
-```bash
 npm install
-```
-
-3. Start the development server:
-```bash
 npm run dev
 ```
 
-4. Open your browser and navigate to `http://localhost:5173`
+Open `http://localhost:5173`. Default route is the 404-style page; use the Home button to reach the dashboard.
 
-## 🛠️ Tech Stack
+## Cool Features
 
-- **React 18** - UI framework
-- **TypeScript** - Type safety
-- **Vite** - Build tool and dev server
-- **Three.js** - 3D graphics and animations
-- **Framer Motion** - Smooth animations
-- **Tailwind CSS** - Styling
-- **shadcn/ui** - UI components
-- **PDF.js** - PDF text extraction for flashcards
-- **Web Audio API** - Sound effects and music
+- **3D Envelope** – Click-to-open envelope with seal, flap, and paper slide. Sound and particle effects.
+- **F1 Racing** – 3D race with Six cars (Red Bull, Mercedes, Ferrari, McLaren, Alpine, Aston Martin). Competitors, position, speed, finish line. UP/W accelerate, LEFT/RIGHT steer.
+- **Flashcard Generator** – Paste text or upload PDF; auto-generates flashcards with multiple-choice options and study mode.
+- **3D Flower Viewer** – Three.js tulip, daisy, lily, four-leaf clover. Rotate and zoom.
+- **Photobooth** – Webcam capture, filters, design templates (no emojis). Save to gallery.
+- **Voice Recorder** – Record, waveform playback, multiple messages, download.
+- **Love Letter Builder** – Rich text, fonts, colors. Save multiple letters (localStorage).
+- **Countdown Timer** – Target date, animated numbers, particle effects.
+- **Date Planner** – Calendar, activity ideas, save plans.
+- **Love Language Quiz** – Quiz and personalized results.
+- **Scrapbook Creator** – Drag-and-drop photos, notes, stickers; multiple layouts.
+- **Secret Message Decoder** – Puzzles and hidden messages.
+- **Photo Gallery** – Upload, filters, animated reveal on scroll.
+- **Background Music** – Romantic melody; mute/unmute. Available app-wide.
 
-## 📁 Project Structure
+## Tech
 
-```
-src/
-├── components/
-│   ├── valentine/        # Valentine's journey components
-│   └── ui/              # Reusable UI components
-├── pages/               # Feature pages
-├── hooks/               # Custom React hooks
-├── lib/                 # Utility functions
-└── App.tsx             # Main app with routing
-```
+React 18, TypeScript, Vite, Three.js, Framer Motion, Tailwind, shadcn/ui, PDF.js (flashcards), Web Audio API (sounds + music).
 
-## 🎮 Controls
+## Data
 
-### F1 Racing Game
-- **UP / W** - Accelerate
-- **LEFT / A** - Steer left
-- **RIGHT / D** - Steer right
+Countdown, letters, plans, voice messages, photobooth photos, flashcard sets, and F1 best times persist in localStorage.
 
-### General Navigation
-- Use the navigation menu to access different features
-- Most features save data to localStorage automatically
+## License
 
-## 💾 Data Persistence
-
-The application uses localStorage to save:
-- Countdown target dates
-- Love letters
-- Date plans
-- Voice messages
-- Photobooth photos
-- Flashcard sets
-- F1 racing best times
-
-## 🎨 Features Highlights
-
-### Sound System
-- Custom sound effects for interactions
-- Background romantic music
-- Mute/unmute controls
-
-### Animations
-- Smooth page transitions
-- Particle effects
-- Floating hearts and sparkles
-- 3D transformations
-
-### 3D Graphics
-- Three.js powered 3D flowers
-- 3D F1 cars and racing track
-- Realistic lighting and shadows
-
-## 📝 License
-
-This project is a personal gift project.
-
-## 🙏 Acknowledgments
-
-Built with love using modern web technologies.
+Personal gift project.
