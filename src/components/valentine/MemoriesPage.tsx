@@ -21,7 +21,7 @@ const memories = [
   {
     id: 2,
     image: "/gigi/2.png",
-    caption: "The Chokehold Dress",
+    caption: "leopard dress!!",
     description: "i love this leopard print dress u have - u have no idea how this pic has me in chokehold (as in)",
   },
   {
@@ -111,7 +111,7 @@ const MemoriesPage = ({ onComplete }: MemoriesPageProps) => {
       >
         <div className="space-y-4">
           <h1 className="text-5xl md:text-7xl font-heavy text-primary tracking-tight">
-            Our Memories
+            my valentine,
           </h1>
           <div className="h-1 w-24 bg-primary/20 mx-auto rounded-full" />
         </div>

@@ -109,7 +109,7 @@ const LockPage = ({ onComplete, onAccessGranted }: LockPageProps) => {
                             </h1>
 
                             <p className="text-3xl md:text-4xl text-white/50 font-serif-italic max-w-2xl mx-auto leading-relaxed">
-                                Are you <span className="text-white border-b-2 border-white/40 px-3 break-all transition-all duration-300">{name || '_____'}</span>?
+                                Are you <span className="text-white border-b-2 border-white/40 px-3 break-all transition-all duration-300">{name || ''}</span>?
                             </p>
                         </div>
 
@@ -120,7 +120,7 @@ const LockPage = ({ onComplete, onAccessGranted }: LockPageProps) => {
                                     type="text"
                                     value={name}
                                     onChange={(e) => setName(e.target.value)}
-                                    placeholder="NAME..."
+                                    placeholder="TYPE YOUR NAME"
                                     className={`w-full bg-transparent border-b-2 rounded-none px-4 py-8 text-4xl text-center font-mono tracking-widest text-white focus:outline-none transition-all duration-300 ${isPanicking ? 'border-red-600' : 'border-white/10 focus:border-white'
                                         }`}
                                     autoFocus
