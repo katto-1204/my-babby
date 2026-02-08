@@ -3,13 +3,16 @@ import { motion } from 'framer-motion';
 
 interface BackgroundMusicProps {
   isActive: boolean;
+  vibe?: 'romantic' | 'inspecting';
 }
 
-// Generate a simple romantic melody using Web Audio API
+// Generate melodies using Web Audio API
 class MusicGenerator {
   private audioContext: AudioContext | null = null;
   private oscillators: OscillatorNode[] = [];
   private isPlaying = false;
+  private currentVibe: 'romantic' | 'inspecting' = 'romantic';
+  private loopTimeoutId: number | null = null;
 
   private getAudioContext(): AudioContext {
     if (!this.audioContext) {
@@ -18,64 +21,108 @@ class MusicGenerator {
     return this.audioContext;
   }
 
-  // Simple romantic melody (C major scale)
-  private notes = [
-    { freq: 261.63, name: 'C4' }, // C
-    { freq: 293.66, name: 'D4' }, // D
-    { freq: 329.63, name: 'E4' }, // E
-    { freq: 349.23, name: 'F4' }, // F
-    { freq: 392.00, name: 'G4' }, // G
-    { freq: 440.00, name: 'A4' }, // A
-    { freq: 493.88, name: 'B4' }, // B
-    { freq: 523.25, name: 'C5' }, // C
-  ];
+  // Notes frequencies
+  private notes = {
+    romantic: [
+      261.63, // C4
+      293.66, // D4
+      329.63, // E4
+      349.23, // F4
+      392.00, // G4
+      440.00, // A4
+      493.88, // B4
+      523.25, // C5
+    ],
+    inspecting: [
+      110.00, // A2 (Low, percussive)
+      123.47, // B2
+      130.81, // C3
+      146.83, // D3
+      0,      // Muted step
+    ]
+  };
 
-  playMelody() {
-    if (this.isPlaying) return;
+  playMelody(vibe: 'romantic' | 'inspecting' = 'romantic') {
+    // If already playing the requested vibe, don't restart
+    if (this.isPlaying && this.currentVibe === vibe) return;
+
+    this.stop();
     this.isPlaying = true;
+    this.currentVibe = vibe;
     const ctx = this.getAudioContext();
-    
-    // Play a gentle romantic melody
-    const melody = [0, 2, 4, 2, 0, 4, 5, 4, 2, 0]; // C-E-G-E-C-G-A-G-E-C
-    
+
+    // Ensure context is resumed (browsers often suspend audio until user interaction)
+    if (ctx.state === 'suspended') {
+      ctx.resume();
+    }
+
+    let melody: number[] = [];
+    let speed = 0.5;
+    let type: OscillatorType = 'sine';
+
+    if (vibe === 'romantic') {
+      melody = [0, 2, 4, 3, 0, 4, 2, 1];
+      speed = 0.6;
+      type = 'sine';
+    } else {
+      // Subdued, rhythmic low pulses (no twinkling)
+      melody = [0, 4, 1, 4, 0, 4, 2, 4];
+      speed = 0.3;
+      type = 'sine'; // Sine is softer than square, less "twinkly" or harsh
+    }
+
     melody.forEach((noteIndex, i) => {
-      const note = this.notes[noteIndex];
+      const freq = vibe === 'romantic' ? this.notes.romantic[noteIndex] : this.notes.inspecting[noteIndex];
+      // Skip muted steps
+      if (freq === 0) return;
+
       const oscillator = ctx.createOscillator();
       const gainNode = ctx.createGain();
-      
+
       oscillator.connect(gainNode);
       gainNode.connect(ctx.destination);
-      
-      oscillator.type = 'sine';
-      oscillator.frequency.setValueAtTime(note.freq, ctx.currentTime + i * 0.5);
-      
-      gainNode.gain.setValueAtTime(0.08, ctx.currentTime + i * 0.5);
-      gainNode.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + i * 0.5 + 0.4);
-      
-      oscillator.start(ctx.currentTime + i * 0.5);
-      oscillator.stop(ctx.currentTime + i * 0.5 + 0.4);
-      
+
+      oscillator.type = type;
+      oscillator.frequency.setValueAtTime(freq, ctx.currentTime + i * speed);
+
+      if (vibe === 'romantic') {
+        gainNode.gain.setValueAtTime(0.06, ctx.currentTime + i * speed);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + i * speed + 0.5);
+      } else {
+        // More audible percussive hits for inspection
+        gainNode.gain.setValueAtTime(0.05, ctx.currentTime + i * speed);
+        gainNode.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + i * speed + 0.2);
+      }
+
+
+      oscillator.start(ctx.currentTime + i * speed);
+      oscillator.stop(ctx.currentTime + i * speed + speed);
+
       this.oscillators.push(oscillator);
     });
-    
+
     // Loop the melody
-    setTimeout(() => {
-      this.isPlaying = false;
-      this.oscillators = [];
-      if (this.isPlaying) {
-        this.playMelody();
+    this.loopTimeoutId = window.setTimeout(() => {
+      if (this.isPlaying && this.currentVibe === vibe) {
+        this.isPlaying = false; // Reset for clear call
+        this.playMelody(vibe);
       }
-    }, melody.length * 500);
+    }, melody.length * speed * 1000);
   }
 
   stop() {
     this.isPlaying = false;
+
+    if (this.loopTimeoutId !== null) {
+      window.clearTimeout(this.loopTimeoutId);
+      this.loopTimeoutId = null;
+    }
+
     this.oscillators.forEach(osc => {
       try {
         osc.stop();
-      } catch (e) {
-        // Ignore errors
-      }
+        osc.disconnect();
+      } catch (e) { }
     });
     this.oscillators = [];
   }
@@ -83,37 +130,26 @@ class MusicGenerator {
 
 const musicGenerator = new MusicGenerator();
 
-const BackgroundMusic = ({ isActive }: BackgroundMusicProps) => {
+const BackgroundMusic = ({ isActive, vibe = 'romantic' }: BackgroundMusicProps) => {
   const [isMuted, setIsMuted] = useState(false);
-  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   useEffect(() => {
     if (isActive && !isMuted) {
-      // Play melody every 6 seconds
-      musicGenerator.playMelody();
-      intervalRef.current = setInterval(() => {
-        musicGenerator.playMelody();
-      }, 6000);
+      musicGenerator.playMelody(vibe);
     } else {
       musicGenerator.stop();
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current);
-      }
     }
 
     return () => {
       musicGenerator.stop();
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current);
-      }
     };
-  }, [isActive, isMuted]);
+  }, [isActive, isMuted, vibe]);
 
   if (!isActive) return null;
 
   return (
     <motion.button
-      className="fixed bottom-4 right-4 z-50 p-3 rounded-full bg-white/20 backdrop-blur-sm border border-white/30 hover:bg-white/30 transition-colors"
+      className="fixed bottom-4 right-4 z-[9999] p-3 rounded-full bg-black/40 backdrop-blur-lg border border-white/20 hover:bg-black/60 transition-colors shadow-2xl"
       onClick={() => setIsMuted(!isMuted)}
       initial={{ opacity: 0, scale: 0.8 }}
       animate={{ opacity: 1, scale: 1 }}
@@ -126,7 +162,7 @@ const BackgroundMusic = ({ isActive }: BackgroundMusicProps) => {
         height="24"
         viewBox="0 0 24 24"
         fill="none"
-        stroke="currentColor"
+        stroke="white"
         strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"

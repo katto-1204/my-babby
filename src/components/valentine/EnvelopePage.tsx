@@ -22,7 +22,7 @@ const EnvelopePage = ({ onComplete }: EnvelopePageProps) => {
       playSound('success');
       setTimeout(() => {
         onComplete();
-      }, 1200);
+      }, 1800);
     }
   };
 
@@ -30,7 +30,7 @@ const EnvelopePage = ({ onComplete }: EnvelopePageProps) => {
     <div className="page-container gradient-romantic flex flex-col items-center justify-center px-4">
       <FloatingHearts count={15} />
       <ParticleSystem isActive={clickCount >= 1} count={40} type="mixed" />
-      
+
       {/* Header */}
       <motion.div
         className="text-center mb-12"
@@ -46,7 +46,7 @@ const EnvelopePage = ({ onComplete }: EnvelopePageProps) => {
         >
           A Letter For You
         </motion.h1>
-        
+
         <motion.p
           className="text-xl text-muted-foreground font-serif-italic"
           initial={{ opacity: 0 }}
@@ -56,13 +56,13 @@ const EnvelopePage = ({ onComplete }: EnvelopePageProps) => {
           I wrote something special, Gigi
         </motion.p>
       </motion.div>
-      
+
       {/* Envelope */}
       <motion.div
         initial={{ opacity: 0, y: 50, scale: 0.8, rotateY: -15 }}
-        animate={{ 
-          opacity: 1, 
-          y: 0, 
+        animate={{
+          opacity: 1,
+          y: 0,
           scale: 1,
           rotateY: 0,
         }}
@@ -74,7 +74,7 @@ const EnvelopePage = ({ onComplete }: EnvelopePageProps) => {
           onClick={handleEnvelopeClick}
         />
       </motion.div>
-      
+
       {/* Additional romantic text */}
       <motion.div
         className="mt-12 text-center max-w-md"

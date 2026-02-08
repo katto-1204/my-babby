@@ -23,10 +23,31 @@ const LetterPage = ({ onComplete }: LetterPageProps) => {
     }
   };
 
+  // Calculate background color based on progress (darkening green reveal)
+  const getDynamicBg = (progress: number) => {
+    // Light green: hsl(145, 45%, 96%)
+    // Dark green: hsl(145, 60%, 15%)
+    const saturation = 45 + (progress / 100) * 15;
+    const lightness = 96 - (progress / 100) * 81;
+    return `hsl(145, ${saturation}%, ${lightness}%)`;
+  };
+
+
   return (
-    <div className="page-container gradient-romantic flex flex-col items-center justify-center px-4 py-8">
+    <div
+      className={`page-container flex flex-col items-center justify-center px-4 py-8 relative transition-all duration-700 ${revealProgress > 50 ? 'text-white' : 'text-foreground'
+        }`}
+      style={{
+        background: revealProgress > 0 ? getDynamicBg(revealProgress) : 'hsl(145, 45%, 96%)'
+      }}
+    >
+
+      {/* Base background layer that stays behind */}
+      <div className="absolute inset-0 gradient-romantic -z-10 opacity-30" />
+
+
       <FloatingHearts count={8} />
-      
+
       {/* Header */}
       <motion.div
         className="text-center mb-8"
@@ -39,7 +60,7 @@ const LetterPage = ({ onComplete }: LetterPageProps) => {
         </h2>
         <p className="text-muted-foreground mt-2">Scratch to reveal what's inside.</p>
       </motion.div>
-      
+
       {/* Scratch Card */}
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
@@ -53,14 +74,13 @@ const LetterPage = ({ onComplete }: LetterPageProps) => {
         >
           <div className="text-center space-y-4">
             <h2 className="text-2xl font-serif-italic text-foreground">
-              Hi Gigi,
+              Hi, Babby!,
             </h2>
-            <p className="text-foreground/90 leading-relaxed text-sm">
-              I wanted to make something small but meaningful.
+            <p className="text-foreground/90 leading-relaxed text-sm italic px-2">
+              'it's almost valentines day,
+              this is my small surprise for you and i hope you'll like it baby,"
             </p>
-            <p className="text-foreground/90 leading-relaxed text-sm">
-              You've made every day brighter, and I wanted to thank you in my own way.
-            </p>
+
             <motion.div
               className="pt-2 flex justify-center"
               animate={{ scale: [1, 1.1, 1] }}
@@ -71,7 +91,7 @@ const LetterPage = ({ onComplete }: LetterPageProps) => {
           </div>
         </ScratchCanvas>
       </motion.div>
-      
+
       {/* Progress indicator */}
       <motion.div
         className="mt-6 text-sm text-muted-foreground"
@@ -96,7 +116,7 @@ const LetterPage = ({ onComplete }: LetterPageProps) => {
           </div>
         )}
       </motion.div>
-      
+
       {/* Continue Button - only shows at 85% */}
       {showContinue && (
         <motion.button

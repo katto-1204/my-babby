@@ -10,28 +10,57 @@ import ClosingPage from './ClosingPage';
 import BackgroundMusic from './BackgroundMusic';
 import CursorTrail from './CursorTrail';
 import InteractiveSparkles from './InteractiveSparkles';
+import LockPage from './LockPage';
 
-type Page = 'error' | 'envelope' | 'letter' | 'memories' | 'flowers' | 'question' | 'closing';
+type Page = 'lock' | 'error' | 'envelope' | 'letter' | 'memories' | 'flowers' | 'question' | 'closing';
+
+
 
 const ValentineApp = () => {
-  const [currentPage, setCurrentPage] = useState<Page>('error');
+  const [currentPage, setCurrentPage] = useState<Page>('lock');
+  const [musicVibe, setMusicVibe] = useState<'romantic' | 'inspecting'>('inspecting');
 
   const goToPage = useCallback((page: Page) => {
     setCurrentPage(page);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, []);
 
+  const handleAccessGranted = useCallback(() => {
+    setMusicVibe('romantic');
+  }, []);
+
   const handleReplay = useCallback(() => {
     setCurrentPage('error');
+    setMusicVibe('romantic');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, []);
 
+
   return (
     <div className="min-h-screen overflow-x-hidden">
-      <BackgroundMusic isActive={currentPage !== 'error'} />
+      {/* Music stays active throughout the entire flow as requested */}
+      <BackgroundMusic isActive={true} vibe={musicVibe} />
+
+
       <CursorTrail isActive={currentPage !== 'error'} />
       <InteractiveSparkles isActive={currentPage !== 'error'} />
       <AnimatePresence mode="wait">
+        {currentPage === 'lock' && (
+          <motion.div
+            key="lock"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <LockPage
+              onComplete={() => goToPage('error')}
+              onAccessGranted={handleAccessGranted}
+            />
+
+          </motion.div>
+        )}
+
         {currentPage === 'error' && (
           <motion.div
             key="error"
@@ -43,6 +72,7 @@ const ValentineApp = () => {
             <ErrorPage onComplete={() => goToPage('envelope')} />
           </motion.div>
         )}
+
 
         {currentPage === 'envelope' && (
           <motion.div

@@ -19,7 +19,7 @@ import SecretMessageDecoder from "./pages/SecretMessageDecoder";
 import FlashcardGenerator from "./pages/FlashcardGenerator";
 import Photobooth from "./pages/Photobooth";
 import F1Racing from "./pages/F1Racing";
-import BackgroundMusic from "./components/valentine/BackgroundMusic";
+
 
 const queryClient = new QueryClient();
 
@@ -28,7 +28,7 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
-      <BackgroundMusic isActive={true} />
+
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />

@@ -110,6 +110,8 @@ const features = [
   },
 ];
 
+const MotionLink = motion(Link);
+
 const Home = () => {
   const { playSound } = useSound();
 
@@ -225,7 +227,7 @@ const Home = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.2 }}
         >
-          <Link
+          <MotionLink
             to="/"
             onClick={() => playSound('sparkle')}
             className="inline-block px-10 py-5 btn-romantic text-xl font-medium shadow-elevated"
@@ -233,7 +235,7 @@ const Home = () => {
             whileTap={{ scale: 0.95 }}
           >
             Start Valentine's Journey
-          </Link>
+          </MotionLink>
         </motion.div>
       </div>
     </div>

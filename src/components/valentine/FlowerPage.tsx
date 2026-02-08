@@ -61,14 +61,14 @@ const FlowerPage = ({ onComplete }: FlowerPageProps) => {
       
       {/* Flowers Container */}
       <motion.div
-        className="flex flex-wrap justify-center items-end gap-6 md:gap-8 lg:gap-12 mb-12 z-10 max-w-5xl mx-auto"
+        className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10 lg:gap-12 mb-12 z-10 max-w-6xl mx-auto"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.8 }}
       >
         {/* Tulip */}
         <motion.div
-          className="flex flex-col items-center"
+          className="flex flex-col items-center text-center max-w-xs"
           whileHover={{ scale: 1.05 }}
         >
           <TulipIcon 
@@ -82,21 +82,21 @@ const FlowerPage = ({ onComplete }: FlowerPageProps) => {
             animate={{ opacity: 1 }}
             transition={{ delay: 2.5 }}
           >
-            A Tulip
+            Tulip
           </motion.p>
           <motion.p
-            className="text-sm text-muted-foreground text-center max-w-[140px]"
+            className="text-sm text-muted-foreground mt-2"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 2.7 }}
           >
-            for my perfect love
+            Your most favorite flower. Although u have lots of favorites, somehow it's Gigi's trademark. Tulips always remind me of your warmth. Just like how the sun radiates in your eyes, ahahaha, you look so beautiful. Being with you feels like coming home, always.
           </motion.p>
         </motion.div>
         
         {/* Daisy */}
         <motion.div
-          className="flex flex-col items-center"
+          className="flex flex-col items-center text-center max-w-xs"
           whileHover={{ scale: 1.05 }}
         >
           <DaisyIcon 
@@ -109,21 +109,21 @@ const FlowerPage = ({ onComplete }: FlowerPageProps) => {
             animate={{ opacity: 1 }}
             transition={{ delay: 3 }}
           >
-            A Daisy
+            Daisy
           </motion.p>
           <motion.p
-            className="text-sm text-muted-foreground text-center max-w-[140px]"
+            className="text-sm text-muted-foreground mt-2"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 3.2 }}
           >
-            for your innocent beauty
+            It's my favorite flower and I always get them from you. I actually don't have a particular favorite in mind, but ever since we talked, all I could ever think of is daisy. Also, we did say we'll always try for each other. As for me, I'll be welcoming new beginnings of me to do better. That's why I love daisies, as they also mean new beginnings. Every daisy from you reminds me of your thoughtfulness. They make me feel loved in a way that words cannot fully capture.
           </motion.p>
         </motion.div>
         
         {/* Lily */}
         <motion.div
-          className="flex flex-col items-center"
+          className="flex flex-col items-center text-center max-w-xs"
           whileHover={{ scale: 1.05 }}
         >
           <LilyIcon 
@@ -137,21 +137,21 @@ const FlowerPage = ({ onComplete }: FlowerPageProps) => {
             animate={{ opacity: 1 }}
             transition={{ delay: 3.5 }}
           >
-            A Lily
+            Lily
           </motion.p>
           <motion.p
-            className="text-sm text-muted-foreground text-center max-w-[140px]"
+            className="text-sm text-muted-foreground mt-2"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 3.7 }}
           >
-            for your elegance
+            This is your new favorite. I kept giving em to you, as they are as pretty as u :3 This is a Gigi flower and, aside from tulips, u r the only one in mind that comes across. Lilies feel delicate yet strong, just like you. I love how they reflect your beauty and I just cant explain u look so UGHHHH ESPECIALLY IF MAG FT TAYO! I love lilies din kasi pang bading yan na flower ehahahah anws. Every time I see them, I think of how lucky I am to have you in my life.
           </motion.p>
         </motion.div>
         
         {/* Four-Leaf Clover */}
         <motion.div
-          className="flex flex-col items-center"
+          className="flex flex-col items-center text-center max-w-xs"
           whileHover={{ scale: 1.05 }}
         >
           <FourLeafCloverIcon 
@@ -165,15 +165,15 @@ const FlowerPage = ({ onComplete }: FlowerPageProps) => {
             animate={{ opacity: 1 }}
             transition={{ delay: 4 }}
           >
-            A Clover
+            4-Leaf Clover
           </motion.p>
           <motion.p
-            className="text-sm text-muted-foreground text-center max-w-[140px]"
+            className="text-sm text-muted-foreground mt-2"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 4.2 }}
           >
-            for our good luck together
+            4 is our number, baby, and you are the lucky charm of my life. With your good soul and energy, it gives me hope and luck to do better each day. Finding you feels like finding a rare treasure. You make everything brighter just by being in my life. I feel protected and inspired whenever I'm with you. Having you is the kind of luck that I never thought was real.
           </motion.p>
         </motion.div>
       </motion.div>
@@ -186,8 +186,7 @@ const FlowerPage = ({ onComplete }: FlowerPageProps) => {
         transition={{ delay: 4.5 }}
       >
         <p className="text-foreground/90 font-serif-italic text-lg leading-relaxed">
-          "Like these flowers, my love for you grows stronger each day, 
-          blooming more beautiful with every moment we share."
+          Like these flowers, my love for you grows stronger each day, blooming more beautiful with every moment we share.
         </p>
       </motion.div>
       

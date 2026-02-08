@@ -47,47 +47,49 @@ const Envelope = ({ isOpen, isPaperOut, onClick }: EnvelopeProps) => {
         height="300"
         viewBox="0 0 400 300"
         className="drop-shadow-2xl"
-        style={{ filter: 'drop-shadow(0 20px 40px rgba(0,0,0,0.15))' }}
+        style={{ filter: 'drop-shadow(0 20px 40px rgba(0,0,0,0.15))', overflow: 'visible' }}
       >
+
         <defs>
           {/* Clip path for flap */}
           <clipPath id="flapClip">
-            <path d="M20 60 L200 160 L380 60 L380 68 Q380 60 370 60 L30 60 Q20 60 20 68Z" />
+            <path d="M20 80 L200 170 L380 80 L380 88 Q380 80 370 80 L30 80 Q20 80 20 88Z" />
           </clipPath>
-          
+
+
           {/* Realistic envelope gradient with depth */}
           <linearGradient id="envelopeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
             <stop offset="0%" stopColor="hsl(150, 35%, 94%)" />
             <stop offset="50%" stopColor="hsl(145, 30%, 90%)" />
             <stop offset="100%" stopColor="hsl(140, 28%, 88%)" />
           </linearGradient>
-          
+
           {/* Highlight gradient for 3D effect */}
           <linearGradient id="envelopeHighlight" x1="0%" y1="0%" x2="100%" y2="0%">
             <stop offset="0%" stopColor="hsla(150, 40%, 98%, 0.6)" />
             <stop offset="50%" stopColor="hsla(150, 35%, 95%, 0.3)" />
             <stop offset="100%" stopColor="hsla(145, 30%, 92%, 0.1)" />
           </linearGradient>
-          
+
           {/* Shadow gradient for depth */}
           <linearGradient id="envelopeShadow" x1="0%" y1="0%" x2="0%" y2="100%">
             <stop offset="0%" stopColor="hsla(145, 30%, 85%, 0.4)" />
             <stop offset="100%" stopColor="hsla(145, 25%, 75%, 0.6)" />
           </linearGradient>
-          
+
           {/* Paper texture gradient */}
           <linearGradient id="paperGradient" x1="0%" y1="0%" x2="100%" y2="100%">
             <stop offset="0%" stopColor="hsl(45, 25%, 98%)" />
             <stop offset="50%" stopColor="hsl(40, 20%, 96%)" />
             <stop offset="100%" stopColor="hsl(35, 18%, 94%)" />
           </linearGradient>
-          
+
           {/* Flap gradient */}
           <linearGradient id="flapGradient" x1="0%" y1="0%" x2="100%" y2="100%">
             <stop offset="0%" stopColor="hsl(150, 32%, 93%)" />
             <stop offset="100%" stopColor="hsl(145, 28%, 89%)" />
           </linearGradient>
-          
+
           {/* Inner shadow filter */}
           <filter id="innerShadow">
             <feGaussianBlur in="SourceAlpha" stdDeviation="4" result="blur" />
@@ -100,7 +102,7 @@ const Envelope = ({ isOpen, isPaperOut, onClick }: EnvelopeProps) => {
               <feMergeNode in="SourceGraphic" />
             </feMerge>
           </filter>
-          
+
           {/* Drop shadow filter */}
           <filter id="dropShadow" x="-50%" y="-50%" width="200%" height="200%">
             <feGaussianBlur in="SourceAlpha" stdDeviation="6" />
@@ -114,7 +116,7 @@ const Envelope = ({ isOpen, isPaperOut, onClick }: EnvelopeProps) => {
             </feMerge>
           </filter>
         </defs>
-        
+
         {/* Back of envelope - main body */}
         <g filter="url(#dropShadow)">
           <rect
@@ -127,7 +129,7 @@ const Envelope = ({ isOpen, isPaperOut, onClick }: EnvelopeProps) => {
             stroke="hsl(145, 25%, 80%)"
             strokeWidth="2.5"
           />
-          
+
           {/* Depth shadow on back */}
           <rect
             x="20"
@@ -138,7 +140,7 @@ const Envelope = ({ isOpen, isPaperOut, onClick }: EnvelopeProps) => {
             fill="url(#envelopeShadow)"
             opacity="0.5"
           />
-          
+
           {/* Highlight on back */}
           <rect
             x="20"
@@ -149,16 +151,16 @@ const Envelope = ({ isOpen, isPaperOut, onClick }: EnvelopeProps) => {
             fill="url(#envelopeHighlight)"
           />
         </g>
-        
-        {/* Paper inside with realistic texture */}
+
+        {/* Paper inside with realistic texture - LAYERED BETWEEN BACK AND FRONT */}
         <motion.g
           animate={{
-            y: isPaperOut ? -120 : isOpen ? -50 : 0,
+            y: isPaperOut ? -160 : 0,
             opacity: isPaperOut ? 1 : isOpen ? 0.95 : 0.75,
             scale: isPaperOut ? 1.05 : isOpen ? 1.02 : 1,
           }}
-          transition={{ 
-            duration: 0.8, 
+          transition={{
+            duration: 0.8,
             ease: [0.25, 0.46, 0.45, 0.94],
             opacity: { duration: 0.6 }
           }}
@@ -174,7 +176,7 @@ const Envelope = ({ isOpen, isPaperOut, onClick }: EnvelopeProps) => {
             fill="hsla(0, 0%, 0%, 0.1)"
             transform="translate(4, 4)"
           />
-          
+
           {/* Paper */}
           <rect
             x="50"
@@ -187,7 +189,7 @@ const Envelope = ({ isOpen, isPaperOut, onClick }: EnvelopeProps) => {
             strokeWidth="2"
             filter="url(#innerShadow)"
           />
-          
+
           {/* Paper texture lines */}
           {[0, 1, 2, 3, 4, 5].map((i) => (
             <line
@@ -201,10 +203,10 @@ const Envelope = ({ isOpen, isPaperOut, onClick }: EnvelopeProps) => {
               opacity="0.5"
             />
           ))}
-          
+
           {/* Decorative heart on paper */}
           <motion.g
-            animate={{ 
+            animate={{
               scale: isPaperOut ? [1, 1.2, 1.1] : 1,
             }}
             transition={{ duration: 1.2, repeat: isPaperOut ? Infinity : 0, repeatDelay: 0.8 }}
@@ -222,87 +224,89 @@ const Envelope = ({ isOpen, isPaperOut, onClick }: EnvelopeProps) => {
             />
           </motion.g>
         </motion.g>
-        
-        {/* Front of envelope (bottom part) with 3D effect */}
+
+        {/* Front of envelope (bottom part) with 3D effect - RESTRUCTURED TO HINGE AT Y=80 */}
         <g>
           <path
-            d="M20 280 L20 120 L200 200 L380 120 L380 280 Q380 290 370 290 L30 290 Q20 290 20 280Z"
+            d="M20 80 L20 280 Q20 290 30 290 L370 290 Q380 290 380 280 L380 80 L200 180 Z"
             fill="hsl(140, 30%, 92%)"
             stroke="hsl(145, 25%, 80%)"
             strokeWidth="2.5"
             filter="url(#dropShadow)"
           />
-          
-          {/* Depth on front */}
+
+          {/* Depth on front - more solid to prevent transparency */}
           <path
-            d="M20 280 L20 120 L200 200 L380 120 L380 280 Q380 290 370 290 L30 290 Q20 290 20 280Z"
+            d="M20 80 L20 280 Q20 290 30 290 L370 290 Q380 290 380 280 L380 80 L200 180 Z"
             fill="url(#envelopeShadow)"
-            opacity="0.4"
+            opacity="0.6"
           />
         </g>
-        
+
+
         {/* Envelope flap with realistic 3D rotation - FIXED TRIANGULAR FLAP */}
         <motion.g
-          style={{ 
-            transformOrigin: "200px 60px",
+          style={{
+            transformOrigin: "200px 80px",
             transformStyle: "preserve-3d",
           }}
           animate={{
-            rotateX: isOpen ? -180 : 0,
-            z: isOpen ? -50 : 0,
+            rotateX: isOpen ? -170 : 0,
+            z: isOpen ? -10 : 0,
           }}
-          transition={{ 
-            duration: 0.9, 
+          transition={{
+            duration: 0.9,
             ease: [0.34, 1.56, 0.64, 1],
           }}
         >
           {/* Flap shadow */}
           <path
-            d="M20 60 L200 160 L380 60 L380 68 Q380 60 370 60 L30 60 Q20 60 20 68Z"
+            d="M20 80 L200 170 L380 80 L380 88 Q380 80 370 80 L30 80 Q20 80 20 88Z"
             fill="hsla(0, 0%, 0%, 0.15)"
             transform="translate(0, 5)"
             opacity={isOpen ? 0 : 0.5}
           />
-          
+
           {/* Flap main - PERFECT TRIANGULAR FLAP */}
           <path
-            d="M20 60 L200 160 L380 60 L380 68 Q380 60 370 60 L30 60 Q20 60 20 68Z"
+            d="M20 80 L200 170 L380 80 L380 88 Q380 80 370 80 L30 80 Q20 80 20 88Z"
             fill={isOpen ? "hsl(145, 30%, 88%)" : "url(#flapGradient)"}
             stroke="hsl(145, 25%, 80%)"
             strokeWidth="2.5"
             filter={isOpen ? "none" : "url(#dropShadow)"}
           />
-          
+
           {/* Flap highlight */}
           {!isOpen && (
             <path
-              d="M20 60 L200 160 L380 60 L380 68 Q380 60 370 60 L30 60 Q20 60 20 68Z"
+              d="M20 80 L200 170 L380 80 L380 88 Q380 80 370 80 L30 80 Q20 80 20 88Z"
               fill="url(#envelopeHighlight)"
               opacity="0.6"
             />
           )}
-          
+
+
           {/* Decorative pattern on flap */}
           <motion.g
             animate={{ opacity: isOpen ? 0 : 1 }}
             transition={{ duration: 0.2 }}
           >
-            <line 
-              x1="100" 
-              y1="90" 
-              x2="140" 
-              y2="120" 
-              stroke="hsl(145, 15%, 75%)" 
-              strokeWidth="1.5" 
+            <line
+              x1="100"
+              y1="90"
+              x2="140"
+              y2="120"
+              stroke="hsl(145, 15%, 75%)"
+              strokeWidth="1.5"
               opacity="0.6"
             />
-            <line 
-              x1="260" 
-              y1="120" 
-              x2="300" 
-              y2="90" 
-              stroke="hsl(145, 15%, 75%)" 
-              strokeWidth="1.5" 
+            <line
+              x1="260"
+              y1="120"
+              x2="300"
+              y2="90"
+              stroke="hsl(145, 15%, 75%)"
+              strokeWidth="1.5"
               opacity="0.6"
             />
             {/* Decorative corner flourishes */}
@@ -322,15 +326,15 @@ const Envelope = ({ isOpen, isPaperOut, onClick }: EnvelopeProps) => {
             />
           </motion.g>
         </motion.g>
-        
+
         {/* Seal with breaking animation - CENTERED */}
         <motion.g
           animate={{
             opacity: isOpen ? 0 : 1,
             scale: isOpen ? [1, 1.3, 0] : [1, 1.05, 1],
           }}
-          transition={isOpen ? 
-            { duration: 0.4, ease: "easeIn" } : 
+          transition={isOpen ?
+            { duration: 0.4, ease: "easeIn" } :
             { duration: 2.5, repeat: Infinity, ease: "easeInOut" }
           }
         >
@@ -342,7 +346,7 @@ const Envelope = ({ isOpen, isPaperOut, onClick }: EnvelopeProps) => {
             fill="hsla(0, 0%, 0%, 0.2)"
             transform="translate(3, 3)"
           />
-          
+
           {/* Seal main - PERFECTLY CENTERED */}
           <circle
             cx="200"
@@ -353,7 +357,7 @@ const Envelope = ({ isOpen, isPaperOut, onClick }: EnvelopeProps) => {
             strokeWidth="3"
             filter="url(#innerShadow)"
           />
-          
+
           {/* Seal highlight */}
           <circle
             cx="200"
@@ -362,7 +366,7 @@ const Envelope = ({ isOpen, isPaperOut, onClick }: EnvelopeProps) => {
             fill="url(#envelopeHighlight)"
             opacity="0.4"
           />
-          
+
           {/* Seal inner ring */}
           <circle
             cx="200"
@@ -373,19 +377,21 @@ const Envelope = ({ isOpen, isPaperOut, onClick }: EnvelopeProps) => {
             strokeWidth="1.5"
             opacity="0.6"
           />
-          
-          {/* Heart in seal - PERFECTLY CENTERED at (200, 170) */}
+
+          {/* Heart in seal - CENTERED */}
           <motion.g
             animate={{ scale: [1, 1.1, 1] }}
             transition={{ duration: 2, repeat: Infinity }}
           >
             <path
-              d="M200 165l-2.5-2c-5-4.5-8-7.5-8-11 0-3 2.5-5 5-5 1.5 0 3 .8 4 2 1-1.2 2.5-2 4-2 2.5 0 5 2 5 5 0 3.5-3 6.5-8 11L200 165z"
+              d="M200 180l-2.5-2c-5-4.5-8-7.5-8-11 0-3 2.5-5 5-5 1.5 0 3 .8 4 2 1-1.2 2.5-2 4-2 2.5 0 5 2 5 5 0 3.5-3 6.5-8 11L200 180z"
               fill="white"
               opacity="0.95"
             />
           </motion.g>
-          
+
+
+
           {/* Seal cracks (appear when opening) */}
           {isOpen && (
             <>
@@ -414,8 +420,10 @@ const Envelope = ({ isOpen, isPaperOut, onClick }: EnvelopeProps) => {
             </>
           )}
         </motion.g>
+
       </svg>
-      
+
+
       {/* Hint text with better animation */}
       <motion.p
         className="text-center mt-8 text-muted-foreground text-base font-serif-italic"
@@ -424,7 +432,7 @@ const Envelope = ({ isOpen, isPaperOut, onClick }: EnvelopeProps) => {
       >
         {isPaperOut ? "Taking you to my letter..." : isOpen ? "Click to read the letter..." : "Click to open the envelope"}
       </motion.p>
-      
+
       {/* Enhanced sparkle decorations */}
       {isOpen && (
         <>
@@ -437,13 +445,13 @@ const Envelope = ({ isOpen, isPaperOut, onClick }: EnvelopeProps) => {
                 top: `${-10 + (i % 3) * 5}%`,
               }}
               initial={{ scale: 0, opacity: 0, rotate: 0 }}
-              animate={{ 
+              animate={{
                 scale: [0, 1.3, 1, 0],
                 opacity: [0, 1, 1, 0],
                 rotate: 360,
                 y: [-20, -40],
               }}
-              transition={{ 
+              transition={{
                 duration: 1.5,
                 delay: i * 0.1,
                 repeat: Infinity,
