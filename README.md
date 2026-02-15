@@ -1,4 +1,4 @@
-# A GIGI Surprise
+# KIELENTINES
 
 Interactive Valentine's web app: React, TypeScript, Three.js. Journey from a 404-style entry to envelope, letter, flowers, and extras.
 
